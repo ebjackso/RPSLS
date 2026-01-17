@@ -3,10 +3,12 @@
 #include <ctime> //time() l124
 #include <chrono> //chrono l9
 #include <thread> //this_thread l9
+
 //sleepytime function (milliseconds)
 void sleepytime(int ms) {
 std::this_thread::sleep_for(std::chrono::milliseconds(ms));
 }
+
 //main title
 void main_title() {
 using namespace std;
@@ -52,6 +54,7 @@ _________ __
 \/|__| \/ \/
 )";
 }
+
 //win message
 void win_con() {
 using namespace std;
@@ -102,6 +105,7 @@ cout << R"(
 ______\///____\///____________\/////_______\///_____\/////_____\///_____
 )"; sleepytime(sleeptime);
 }
+
 //skill issue
 void skill_issue() {
 using namespace std;
@@ -120,6 +124,7 @@ __ ______ ______ __ __ ______
 \/_/ \/_____/ \/_____/ \/_____/ \/_____/
 )";
 }
+
 //player win check
 bool playerwin(int playerChoice,int computerChoice) {
 if (
@@ -140,17 +145,21 @@ else {
 return false;
 }
 }
+
 using namespace std;
 int main() {
 // SRNG
 srand(time(0));
 // string array
 string choices[5] = { "Rock", "Paper", "Scissors", "Lizard", "Spock" };
+
 int playerScore = 0;
 int computerScore = 0;
 char playAgain = 'n';
+
 main_title();
 sleepytime(500);
+
 cout << "Rules:\n";
 cout << " Scissors cuts Paper\n";
 cout << " Paper covers Rock\n";
@@ -162,83 +171,98 @@ cout << " Lizard eats Paper\n";
 cout << " Paper disproves Spock\n";
 cout << " Spock vaporizes Rock\n";
 cout << " Rock crushes Scissors\n\n";
+
 //game loop
 do {
 int playerChoice;
 bool validInput = false;
+
 //take choice input & validate
-do {
-cout << "Choose your move:\n";
-cout << "1. Rock\n2. Paper\n3. Scissors\n4. Lizard\n5. Spock\n";
-cout << "Enter (1-5): ";
-cin >> playerChoice;
-if (playerChoice >= 1 && playerChoice <= 5) {
-validInput = true;
-}
-else {
-cout << "Invalid choice! Please enter 1-5.\n\n";
-}
-} while (!validInput);
-// random 1-5
-int computerChoice = (rand() % 5) + 1;
-// adjust for base 0
-playerChoice--;
-computerChoice--;
-// cout choices
-cout << "\nYou chose: " << choices[playerChoice] << endl;
-cout << "Computer chose: " << choices[computerChoice] << endl;
+    do {
+    cout << "Choose your move:\n";
+    cout << "1. Rock\n2. Paper\n3. Scissors\n4. Lizard\n5. Spock\n";
+    cout << "Enter (1-5): ";
+    cin >> playerChoice;
+    if (playerChoice >= 1 && playerChoice <= 5) {
+        validInput = true;
+        }
+    else {
+        cout << "Invalid choice! Please enter 1-5.\n\n";
+        }
+    } while (!validInput);
+
+    // random 1-5
+    int computerChoice = (rand() % 5) + 1;
+
+    // adjust for base 0
+    playerChoice--;
+    computerChoice--;
+
+    // cout choices
+    cout << "\nYou chose: " << choices[playerChoice] << endl;
+    cout << "Computer chose: " << choices[computerChoice] << endl;
+
 // win cons
-//tie
-if (playerChoice == computerChoice) {
-cout << "It's a tie!\n";
-}
-//player wins
-else if (playerwin(playerChoice, computerChoice) == true) {
-cout << "You win this round!\n";
-playerScore++;
-}
-//player loses
-else {
-cout << "Computer wins this round!\n";
-computerScore++;
-}
+    //tie
+    if (playerChoice == computerChoice) {
+    cout << "It's a tie!\n";
+    }
+    //player wins
+    else if (playerwin(playerChoice, computerChoice) == true) {
+    cout << "You win this round!\n";
+    playerScore++;
+    }
+    //player loses
+    else {
+    cout << "Computer wins this round!\n";
+    computerScore++;
+    }
+
 // show current score
-cout << "\nScore -> You: " << playerScore << " | Computer: " <<
-computerScore << "\n\n";
+    cout << "\nScore -> You: " << playerScore << " | Computer: " <<
+    computerScore << "\n\n";
+
 // ask to play again
-cout << "Play another round? (y/n): ";
-cin >> playAgain;
-cout << "\n";
+    cout << "Play another round? (y/n): ";
+    cin >> playAgain;
+    cout << "\n";
 } while (playAgain == 'y' || playAgain == 'Y');
+
 //inject score if needed
 // if (true) {
 // playerScore = ;
 // computerScore = ;
 // }
+
 // final result
 cout << "-----------------\n";
 cout << " FINAL SCORE\n";
 cout << "-----------------\n\n";
 cout << "You: " << playerScore << " | Computer: " << computerScore << "\n";
+
 //if win
 if (playerScore > computerScore) {
-cout << "\n";
-win_con();
+    cout << "\n";
+    win_con();
 }
+
 //if player gets gapped
 else if (playerScore > 0 &&
-((static_cast<double>(computerScore)/static_cast<double>(playerScore)) >= 2) ||
-((computerScore - playerScore) >= 5) && playerScore >= 5){
-skill_issue();
+    ((static_cast<double>(computerScore)/static_cast<double>(playerScore)) >= 2) ||
+    ((computerScore - playerScore) >= 5) && playerScore >= 5){
+    skill_issue();
 }
+
 //regular lose
 else if (computerScore > playerScore) {
-cout << "\nyou lost :(";
+    cout << "\nyou lost :(";
 }
+
 //draw
 else {
-cout << "\neh.... it's a draw :/";
+    cout << "\neh.... it's a draw :/";
 }
+
 cout << "\n\nThanks for playing!\n";
 system("pause");
 return 0;
